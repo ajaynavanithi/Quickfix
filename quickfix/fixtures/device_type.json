@@ -1,0 +1,29 @@
+[
+ {
+  "average_repair_hours": 3,
+  "description": "Quickfix is a well experienced gadgets and other electronics service repair center",
+  "device_type": "Smartphone",
+  "docstatus": 0,
+  "doctype": "Device Type",
+  "modified": "2026-03-21 08:44:10.101424",
+  "name": "Smartphone"
+ },
+ {
+  "average_repair_hours": 6,
+  "description": "Quickfix is a premium service center for laptops",
+  "device_type": "laptop",
+  "docstatus": 0,
+  "doctype": "Device Type",
+  "modified": "2026-03-21 08:46:35.568230",
+  "name": "laptop"
+ },
+ {
+  "average_repair_hours": 5,
+  "description": "Quickfix is a premium service center for all the Tablets with all the specs",
+  "device_type": "Tablet",
+  "docstatus": 0,
+  "doctype": "Device Type",
+  "modified": "2026-03-21 08:47:22.291504",
+  "name": "Tablet"
+ }
+]

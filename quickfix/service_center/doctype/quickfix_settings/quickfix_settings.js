@@ -1,7 +1,7 @@
 // Copyright (c) 2026, navanithi and contributors
 // For license information, please see license.txt
 
-// frappe.ui.form.on("bot", {
+// frappe.ui.form.on("Quickfix Settings", {
 // 	refresh(frm) {
 
 // 	},

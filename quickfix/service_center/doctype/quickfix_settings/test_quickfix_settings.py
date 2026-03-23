@@ -5,5 +5,5 @@
 from frappe.tests.utils import FrappeTestCase
 
 
-class Testbot(FrappeTestCase):
+class TestQuickfixSettings(FrappeTestCase):
 	pass

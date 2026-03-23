@@ -5,5 +5,5 @@
 from frappe.model.document import Document
 
 
-class bot(Document):
+class Technician(Document):
 	pass
