@@ -5,5 +5,5 @@
 from frappe.tests.utils import FrappeTestCase
 
 
-class TestJobcard(FrappeTestCase):
+class TestJobCard(FrappeTestCase):
 	pass

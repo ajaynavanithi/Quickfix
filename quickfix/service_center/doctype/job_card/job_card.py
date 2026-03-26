@@ -1,9 +1,9 @@
-# Copyright (c) 2026, navanithi and contributors
-# For license information, please see license.txt
-
-# import frappe
+import frappe
 from frappe.model.document import Document
 
-
-class Jobcard(Document):
-	pass
+class JobCard(Document):
+    def validate(self):
+        if self.labour_charge in (None, ""):
+            self.labour_charge = frappe.db.get_single_value(
+                "Quickfix Settings", "default_labour_charge"
+            ) or 0

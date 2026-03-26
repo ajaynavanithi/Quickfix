@@ -1,7 +1,8 @@
 {
  "actions": [],
  "allow_rename": 1,
- "creation": "2026-03-23 09:20:51.871849",
+ "autoname": "JC-.YYYY.-.#####",
+ "creation": "2026-03-25 15:10:08.100462",
  "doctype": "DocType",
  "engine": "InnoDB",
  "field_order": [
@@ -23,6 +24,15 @@
   "section_break_fmsv",
   "parts_used_column",
   "part_usage_entry",
+  "financials_and_delivery_section",
+  "parts_total",
+  "labour_charge",
+  "final_amount",
+  "payment_status",
+  "delivery_date",
+  "remarks",
+  "status",
+  "anonyomous",
   "section_break_ypwo",
   "amended_from"
  ],
@@ -145,16 +155,83 @@
   {
    "fieldname": "section_break_ypwo",
    "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "financials_and_delivery_section",
+   "fieldtype": "Section Break",
+   "label": "Financials and Delivery"
+  },
+  {
+   "fieldname": "parts_total",
+   "fieldtype": "Currency",
+   "label": "Parts total",
+   "read_only": 1
+  },
+  {
+   "allow_on_submit": 1,
+   "fieldname": "labour_charge",
+   "fieldtype": "Currency",
+   "label": "Labour Charge"
+  },
+  {
+   "fieldname": "final_amount",
+   "fieldtype": "Currency",
+   "label": "Final Amount",
+   "read_only": 1
+  },
+  {
+   "allow_on_submit": 1,
+   "default": "Unpaid",
+   "fieldname": "payment_status",
+   "fieldtype": "Select",
+   "label": "Payment Status",
+   "options": "Unpaid\nPaid"
+  },
+  {
+   "allow_on_submit": 1,
+   "fieldname": "delivery_date",
+   "fieldtype": "Date",
+   "label": "Delivery Date"
+  },
+  {
+   "fieldname": "remarks",
+   "fieldtype": "Small Text",
+   "label": "Remarks"
+  },
+  {
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "in_standard_filter": 1,
+   "label": "Status",
+   "options": "Draft\nPending Diagnosis\nAwaiting Customer Approval\nIn Repair\nReady for Delivery\nDelivered\nCancelled,"
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "Job card",
+   "print_hide": 1,
+   "read_only": 1,
+   "search_index": 1
+  },
+  {
+   "fieldname": "anonyomous",
+   "fieldtype": "Link",
+   "hidden": 1,
+   "label": "anonyomous",
+   "options": "Technician"
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2026-03-23 21:48:29.579278",
+ "modified": "2026-03-25 15:16:27.327464",
  "modified_by": "Administrator",
  "module": "Service Center",
- "name": "Job card",
+ "name": "Job Card",
+ "naming_rule": "Expression",
  "owner": "Administrator",
  "permissions": [
   {
