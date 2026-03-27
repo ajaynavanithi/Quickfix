@@ -26,3 +26,39 @@ def manager_only_action():
     frappe.only_for("QF Manager")
 
     return "Welcome, QF Manager! You are allowed to perform this action."
+
+
+
+
+@frappe.whitelist()
+def get_job_cards_unsafe():
+    return frappe.get_all(
+        "Job Card",
+        fields="*"
+    )
+
+@frappe.whitelist()
+def get_job_cards_safe():
+
+    user = frappe.session.user
+    roles = frappe.get_roles(user)
+
+    job_cards = frappe.get_list(
+        "Job Card",
+        fields=[
+            "name",
+            "customer_name",
+            "device_model",
+            "issue_description",
+            "payment_status",
+            "customer_phone",
+            "customer_email"
+        ]
+    )
+
+    if "Manager" not in roles and "System Manager" not in roles:
+        for jc in job_cards:
+            jc.pop("customer_phone", None)
+            jc.pop("customer_email", None)
+
+    return job_cards
