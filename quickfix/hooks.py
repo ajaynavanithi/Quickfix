@@ -278,3 +278,6 @@ fixtures = [
 permission_query_conditions = {
     "Job Card": "quickfix.service_center.doctype.job_card.job_card.get_permission_query_conditions"
 }
+has_permission = {
+    "Service Invoice": "quickfix.service_center.doctype.service_invoice.service_invoice.has_permission"
+}
