@@ -25,7 +25,7 @@ class JobCard(Document):
 
         if not self.labour_charge:
             self.labour_charge = frappe.db.get_single_value(
-                "QuickFix Settings",
+                "Quickfix Settings",
                 "default_labour_charge"
             ) or 0
 
@@ -89,25 +89,22 @@ class JobCard(Document):
 
     def on_cancel(self):
 
-        
         self.db_set("status", "Cancelled")
 
-        
-            for row in self.part_usage_entry:
-                stock_qty = frappe.db.get_value(
-                    "Spare Part",
-                    row.part,
-                    "stock_qty"
-                ) or 0
+        for row in self.part_usage_entry:
+            stock_qty = frappe.db.get_value(
+                "Spare Part",
+                row.part,
+                "stock_qty"
+            ) or 0
 
-                frappe.db.set_value(
-                    "Spare Part",
-                    row.part,
-                    "stock_qty",
-                    stock_qty + (row.quantity or 0)
-                )
+            frappe.db.set_value(
+                "Spare Part",
+                row.part,
+                "stock_qty",
+                stock_qty + (row.quantity or 0)
+            )
 
-        
         invoice_name = frappe.db.get_value(
             "Service Invoice",
             {"job_card": self.name},

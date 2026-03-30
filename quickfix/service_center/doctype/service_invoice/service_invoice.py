@@ -1,14 +1,14 @@
 # Copyright (c) 2026, navanithi and contributors
 # For license information, please see license.txt
 
-# import frappe
+import frappe
 from frappe.model.document import Document
 
 
 class ServiceInvoice(Document):
 	pass
 
-import frappe
+
 
 def has_permission(doc, user=None):
     if not user:

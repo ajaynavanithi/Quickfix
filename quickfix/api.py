@@ -62,3 +62,21 @@ def get_job_cards_safe():
             jc.pop("customer_email", None)
 
     return job_cards
+
+def send_job_ready_email(job_card):
+
+    doc = frappe.get_doc("Job Card", job_card)
+
+    frappe.sendmail(
+        recipients=[doc.customer_email],
+        subject="Your Device is Ready",
+        message=f"""
+Hello {doc.customer_name},
+
+Your device is ready for delivery.
+
+Job Card: {doc.name}
+
+Thank you.
+"""
+    )
