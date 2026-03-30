@@ -87,6 +87,47 @@ class JobCard(Document):
             job_card=self.name
         )
 
+    def on_cancel(self):
+
+        
+        self.db_set("status", "Cancelled")
+
+        
+            for row in self.part_usage_entry:
+                stock_qty = frappe.db.get_value(
+                    "Spare Part",
+                    row.part,
+                    "stock_qty"
+                ) or 0
+
+                frappe.db.set_value(
+                    "Spare Part",
+                    row.part,
+                    "stock_qty",
+                    stock_qty + (row.quantity or 0)
+                )
+
+        
+        invoice_name = frappe.db.get_value(
+            "Service Invoice",
+            {"job_card": self.name},
+            "name"
+        )
+
+        if invoice_name:
+            invoice_doc = frappe.get_doc("Service Invoice", invoice_name)
+
+            if invoice_doc.docstatus == 1:
+                invoice_doc.cancel()
+
+    def on_trash(self):
+
+        if self.status not in ["Cancelled", "Draft"]:
+            frappe.throw(
+                "You can only delete Job Cards that are in Draft or Cancelled status."
+            )
+
+    
 
 def get_permission_query_conditions(user):
     if not user:
