@@ -11,11 +11,11 @@
  {
   "average_repair_hours": 6,
   "description": "Quickfix is a premium service center for laptops",
-  "device_type": "laptop",
+  "device_type": "Laptop",
   "docstatus": 0,
   "doctype": "Device Type",
   "modified": "2026-03-21 08:46:35.568230",
-  "name": "laptop"
+  "name": "Laptop"
  },
  {
   "average_repair_hours": 5,

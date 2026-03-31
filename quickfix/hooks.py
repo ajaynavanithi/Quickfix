@@ -83,12 +83,11 @@ app_license = "mit"
 # ------------
 
 # before_install = "quickfix.install.before_install"
-# after_install = "quickfix.install.after_install"
+after_install = "quickfix.install.after_install"
 
 # Uninstallation
 # ------------
-
-# before_uninstall = "quickfix.uninstall.before_uninstall"
+before_uninstall = "quickfix.uninstall.before_uninstall"
 # after_uninstall = "quickfix.uninstall.after_uninstall"
 
 # Integration Setup
@@ -285,3 +284,21 @@ has_permission = {
 override_doctype_class = {
     "Job Card": "quickfix.overrides.custom_job_card.CustomJobCard"
 }
+
+doc_events = {
+    "Job Card": {
+        "on_update": "quickfix.audit.log_change",
+        "on_submit": "quickfix.audit.log_change",
+        "on_cancel": "quickfix.audit.log_change"
+    },
+    "Spare Part": {
+        "on_update": "quickfix.audit.log_change"
+    },
+    "Service Invoice": {
+        "on_update": "quickfix.audit.log_change",
+        "on_submit": "quickfix.audit.log_change",
+        "on_cancel": "quickfix.audit.log_change"
+    }
+}
+
+extend_bootinfo = ["quickfix.install.extend_bootinfo"]

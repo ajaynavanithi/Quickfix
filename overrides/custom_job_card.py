@@ -5,7 +5,9 @@ from quickfix.service_center.doctype.job_card.job_card import JobCard
 class CustomJobCard(JobCard):
 
     def validate(self):
+        
         super().validate()
+
         self._check_urgent_unassigned()
 
     def _check_urgent_unassigned(self):
