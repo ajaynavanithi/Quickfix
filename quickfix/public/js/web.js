@@ -1,0 +1,1 @@
+console.log("QuickFix Website JS Loaded");

@@ -26,11 +26,11 @@ app_license = "mit"
 
 # include js, css files in header of desk.html
 # app_include_css = "/assets/quickfix/css/quickfix.css"
-# app_include_js = "/assets/quickfix/js/quickfix.js"
+app_include_js = "/assets/quickfix/js/quickfix.js"
 
 # include js, css files in header of web template
 # web_include_css = "/assets/quickfix/css/quickfix.css"
-# web_include_js = "/assets/quickfix/js/quickfix.js"
+web_include_js = "/assets/quickfix/js/web.js"
 
 # include custom scss in every website theme (without file extension ".scss")
 # website_theme_scss = "quickfix/public/scss/website"
@@ -302,3 +302,13 @@ doc_events = {
 }
 
 extend_bootinfo = ["quickfix.install.extend_bootinfo"]
+
+
+jinja = {
+    "methods": [
+        "quickfix.utils.get_shop_name"
+    ],
+    "filters": [
+        "quickfix.utils.format_job_id"
+    ]
+}
