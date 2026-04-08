@@ -9,4 +9,4 @@ def before_uninstall():
         raise ValidationError(
             "Cannot uninstall QuickFix: Submitted Job Cards exist. "
             "Please cancel or delete them before uninstalling."
-        )
+        )   

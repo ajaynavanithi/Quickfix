@@ -1,0 +1,12 @@
+[
+ {
+  "default_labour_charge": 500.0,
+  "docstatus": 0,
+  "doctype": "Quickfix Settings",
+  "low_stock_enabled": 1,
+  "manager_email": "backupnithi@gmail.com",
+  "modified": "2026-03-31 09:47:48.386959",
+  "name": "Quickfix Settings",
+  "shop_name": "quickfix shop"
+ }
+]
