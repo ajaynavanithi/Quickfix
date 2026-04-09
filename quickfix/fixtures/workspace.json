@@ -1316,7 +1316,7 @@
     "parent": "Users",
     "parentfield": "links",
     "parenttype": "Workspace",
-    "report_ref_doctype": null,
+    "report_ref_doctype": "DocShare",
     "type": "Link"
    },
    {

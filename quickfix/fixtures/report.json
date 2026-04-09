@@ -1,0 +1,52 @@
+[
+ {
+  "add_total_row": 0,
+  "add_translate_data": 0,
+  "columns": [],
+  "disabled": 0,
+  "docstatus": 0,
+  "doctype": "Report",
+  "filters": [],
+  "is_standard": "Yes",
+  "javascript": null,
+  "json": null,
+  "letter_head": null,
+  "modified": "2026-04-09 10:17:31.283206",
+  "module": "Service Center",
+  "name": "Open Job Cards",
+  "prepared_report": 1,
+  "query": "SELECT\r\n    name,\r\n    customer_name,\r\n    device_type,\r\n    status,\r\n    assigned_technician,\r\n    estimated_cost,\r\n    creation\r\nFROM\r\n    `tabJob Card`\r\nWHERE\r\n    status NOT IN ('Delivered', 'Cancelled')\r\n    AND (%(device_type)s IS NULL OR device_type = %(device_type)s)\r\nORDER BY\r\n    creation DESC",
+  "ref_doctype": "Job Card",
+  "reference_report": null,
+  "report_name": "Open Job Cards",
+  "report_script": null,
+  "report_type": "Query Report",
+  "roles": [
+   {
+    "parent": "Open Job Cards",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "System Manager"
+   },
+   {
+    "parent": "Open Job Cards",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "QF Service Staff"
+   },
+   {
+    "parent": "Open Job Cards",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "QF Technician"
+   },
+   {
+    "parent": "Open Job Cards",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "QF Manager"
+   }
+  ],
+  "timeout": 0
+ }
+]

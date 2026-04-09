@@ -284,7 +284,15 @@ fixtures = [
     },
     {
         "doctype": "Quickfix Settings"
+    },
+    
+    {
+        "doctype": "Report",
+        "filters": [
+            ["name", "=", "Open Job Cards"]
+        ]
     }
+
 ]
 
 permission_query_conditions = {
