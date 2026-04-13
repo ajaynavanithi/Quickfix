@@ -1,4 +1,7 @@
 import frappe
+from frappe.utils.background_jobs import enqueue
+from frappe.client import get_count as original_get_count
+from frappe.core.doctype.prepared_report.prepared_report import PreparedReport
 
 @frappe.whitelist()
 def share_job_card(job_card_name, user_email):
@@ -20,15 +23,11 @@ def share_job_card(job_card_name, user_email):
 
     return f"Job Card {job_card_name} shared with {user_email}"
 
-
 @frappe.whitelist()
 def manager_only_action():
     frappe.only_for("QF Manager")
 
     return "Welcome, QF Manager! You are allowed to perform this action."
-
-
-
 
 @frappe.whitelist()
 def mark_as_delivered(job_card):
@@ -42,7 +41,6 @@ def mark_as_delivered(job_card):
     doc.save()
 
     return {"name": doc.name, "status": doc.status}
-
 
 @frappe.whitelist()
 def reject_job(job_card, reason=None):
@@ -58,7 +56,6 @@ def reject_job(job_card, reason=None):
 
     return {"name": doc.name, "status": doc.status}
 
-
 @frappe.whitelist()
 def transfer_technician(job_card, technician=None):
     doc = frappe.get_doc("Job Card", job_card)
@@ -70,7 +67,6 @@ def transfer_technician(job_card, technician=None):
     doc.save()
 
     return {"name": doc.name, "assigned_technician": doc.assigned_technician}
-
 
 @frappe.whitelist()
 def transfer_job(from_tech, to_tech):
@@ -94,7 +90,6 @@ def transfer_job(from_tech, to_tech):
         )
         raise
 
-
 @frappe.whitelist()
 def get_job_cards_unsafe():
     return frappe.get_all(
@@ -104,7 +99,6 @@ def get_job_cards_unsafe():
 
 @frappe.whitelist()
 def get_job_cards_safe():
-
     user = frappe.session.user
     roles = frappe.get_roles(user)
 
@@ -127,8 +121,6 @@ def get_job_cards_safe():
             jc.pop("customer_email", None)
 
     return job_cards
-
-
 
 @frappe.whitelist(allow_guest=True)
 def track_job(job_id):
@@ -158,7 +150,6 @@ def track_job(job_id):
     return job
 
 def send_job_ready_email(job_card):
-
     doc = frappe.get_doc("Job Card", job_card)
 
     frappe.sendmail(
@@ -175,13 +166,8 @@ Thank you.
 """
     )
 
-from frappe.client import get_count as original_get_count
-
 @frappe.whitelist()
 def custom_get_count(doctype, filters=None, debug=False, cache=False):
-
-    print("OVERRIDE WORKING")  # debug
-
     frappe.get_doc({
         "doctype": "Audit Log",
         "doctype_name": doctype,
@@ -190,3 +176,28 @@ def custom_get_count(doctype, filters=None, debug=False, cache=False):
     }).insert(ignore_permissions=True)
 
     return original_get_count(doctype, filters, debug, cache)
+
+import frappe
+from frappe.utils.background_jobs import enqueue
+from frappe.core.doctype.prepared_report.prepared_report import generate_report
+
+@frappe.whitelist()
+def trigger_prepared_report(filters=None):
+    # TEMP direct call
+    run_prepared_report(filters, frappe.session.user)
+
+
+def run_prepared_report(filters=None, user=None):
+    if not filters:
+        filters = {}
+
+    prepared_report = frappe.get_doc({
+        "doctype": "Prepared Report",
+        "report_name": "Technician Performance Report",
+        "filters": frappe.as_json(filters),
+        "owner": user
+    })
+    prepared_report.insert(ignore_permissions=True)
+
+    # ✅ THIS IS THE FIX
+    generate_report(prepared_report.name)
