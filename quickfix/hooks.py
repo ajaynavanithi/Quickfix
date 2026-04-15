@@ -339,3 +339,9 @@ portal_menu_items = [
         "role": "Guest"
     }
 ]
+
+jenv = {
+    "methods": [
+        "quickfix.utils.get_qr_code"
+    ]
+}

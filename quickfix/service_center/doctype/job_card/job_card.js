@@ -97,10 +97,8 @@ frappe.ui.form.on('Job Card', {
 			frm.page.set_title(frm.doc.name + " - " + frappe.boot.quickfix_shop_name);
 		}
 
-		// Hide customer_phone for non-managers (demo of JS hiding pitfall)
-		if (!frappe.user.has_role("Manager")) {
-			frm.set_df_property("customer_phone", "hidden", 1);
-		}
+		// Keep customer phone visible in the main Job Card form.
+		frm.set_df_property("customer_phone", "hidden", 0);
 	},
 	assigned_technician: function(frm) {
 		if (!frm.doc.assigned_technician) return;

@@ -199,5 +199,5 @@ def run_prepared_report(filters=None, user=None):
     })
     prepared_report.insert(ignore_permissions=True)
 
-    # ✅ THIS IS THE FIX
+    #  THIS IS THE FIX
     generate_report(prepared_report.name)

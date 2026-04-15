@@ -1,5 +1,17 @@
 
 import frappe
+import qrcode
+import base64
+from io import BytesIO
+
+def get_qr_code(docname):
+    url = f"https://your-site.com/app/job-card/{docname}"
+
+    qr = qrcode.make(url)
+    buffer = BytesIO()
+    qr.save(buffer, format="PNG")
+
+    return base64.b64encode(buffer.getvalue()).decode()
 
 def send_urgent_alert(job_card, manager):
     subject = "Urgent Job Card Unassigned"

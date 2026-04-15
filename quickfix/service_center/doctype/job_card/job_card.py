@@ -124,8 +124,10 @@ class JobCard(Document):
                 "You can only delete Job Cards that are in Draft or Cancelled status."
             )
 
-    
-
+    def before_print(self, print_settings=None):
+        self.print_summary = (
+            f"{self.customer_name} - {self.device_brand} {self.device_model}"
+        )
 def get_permission_query_conditions(user):
     if not user:
         user = frappe.session.user
