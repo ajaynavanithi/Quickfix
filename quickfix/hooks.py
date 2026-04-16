@@ -345,3 +345,8 @@ jenv = {
         "quickfix.utils.get_qr_code"
     ]
 }
+doc_events = {
+    "Job Card": {
+        "validate": "quickfix.api.jobcard_validate_handler"
+    }
+}

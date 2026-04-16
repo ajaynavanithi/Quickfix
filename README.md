@@ -63,3 +63,15 @@ mit
         Before handling the request we need to confirm that the get_job_summary is whitelisted which is a decorator function that handles the python function accross the browser.The browser send the request and then using api/method phrases the request .First it checks the quickfix app -> then it check the api.py file ->inside the api.py file it checks the get_job_summary  function and then it starts executing the function.If the particular function is not whitelisted then we cannot access it through the broswer and make a api call .
         
         If it is not whitelisted then the permissionerror may occur.
+
+#### Step 2 - Session & CSRF
+       The csrf toekn comes from the server side where it is generated when the session is created
+       frappe.session.data it shows nothing but if i add amethod and called it via url then it shows {"message":{"user":"Administrator","session_ip":"127.0.0.1","last_updated":"2026-04-16 08:14:18.398426","creation":"2026-04-15 19:02:31.170449","session_expiry":"170:00:00","full_name":null,"user_type":"System User","lang":"en","csrf_token":"fd2493e12aa1382d7d01ef30494339a4c6c4792bee1c7e152433232c"}}
+       http://quickfix-dev.localhost:8000/api/method/quickfix.api.check_session
+### step 3-Error visibility
+       In Frappe, when developer_mode is set to 1, any error in a whitelisted method shows full details in the browser, including the error type and traceback, which helps in debugging. When developer_mode is set to 0, the browser only shows a generic message like “Internal Server Error” . This is important in production to prevent exposing sensitive information . Even though the error is hidden from the user, Frappe still logs it internally. These logs can be found in the Error log doctype 
+       http://quickfix-dev.localhost:8000/api/method/quickfix.api.test_error
+
+### step 4-Permission check location
+       When a whitelisted method calls frappe.get_doc("Job Card", JC-2026-0001) without using ignore_permissions, and a QF Technician who is not assigned to that job tries to access it, raises a PermissionError: Not permitted. This happens because the user does not have permission to view that specific Job Card
+       

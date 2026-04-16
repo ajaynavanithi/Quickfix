@@ -2,7 +2,23 @@ import frappe
 from frappe.utils.background_jobs import enqueue
 from frappe.client import get_count as original_get_count
 from frappe.core.doctype.prepared_report.prepared_report import PreparedReport
+from frappe.core.doctype.prepared_report.prepared_report import generate_report
 
+
+
+@frappe.whitelist()
+def test_error():
+    # force error
+    x = 10 / 0
+    return x
+@frappe.whitelist()
+def test_jobcard_access(name):
+    doc = frappe.get_doc("Job Card", name)
+    return doc.customer_name
+
+@frappe.whitelist()
+def check_session():
+    return frappe.session.data
 @frappe.whitelist()
 def share_job_card(job_card_name, user_email):
     if not frappe.db.exists("Job Card", job_card_name):
@@ -148,6 +164,33 @@ def track_job(job_id):
     )
 
     return job
+@frappe.whitelist()
+def get_status_chart_data():
+    data = frappe.db.sql("""
+        SELECT 
+            status, 
+            COUNT(name) as count
+        FROM `tabJob Card`
+        GROUP BY status
+    """, as_dict=True)
+
+    return {
+        "labels": [d.status for d in data],
+        "datasets": [
+            {
+                "name": "Job Count",
+                "values": [d.count for d in data]
+            }
+        ]
+    }
+
+
+
+def jobcard_validate_handler(doc, method):
+    print("Doc_events validate running")
+
+    if not doc.device_brand:
+        frappe.throw("Device brand missing from doc_events")
 
 def send_job_ready_email(job_card):
     doc = frappe.get_doc("Job Card", job_card)
@@ -177,9 +220,6 @@ def custom_get_count(doctype, filters=None, debug=False, cache=False):
 
     return original_get_count(doctype, filters, debug, cache)
 
-import frappe
-from frappe.utils.background_jobs import enqueue
-from frappe.core.doctype.prepared_report.prepared_report import generate_report
 
 @frappe.whitelist()
 def trigger_prepared_report(filters=None):

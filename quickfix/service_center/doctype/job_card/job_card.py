@@ -3,6 +3,10 @@ from frappe.model.document import Document
 
 class JobCard(Document):
     def validate(self):
+        print("Controller validate running")
+
+        if not self.customer_name:
+            frappe.throw("Customer name missing from controller")
         if self.labour_charge in (None, ""):
             self.labour_charge = frappe.db.get_single_value(
                 "Quickfix Settings", "default_labour_charge"
@@ -123,6 +127,10 @@ class JobCard(Document):
             frappe.throw(
                 "You can only delete Job Cards that are in Draft or Cancelled status."
             )
+
+    def on_update(self):
+        print("on_update triggered")
+        self.save()
 
     def before_print(self, print_settings=None):
         self.print_summary = (

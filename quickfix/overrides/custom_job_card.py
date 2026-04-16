@@ -17,3 +17,8 @@ class CustomJobCard(JobCard):
                 job_card=self.name,
                 manager=settings.manager_email
             )
+# MRO means the order Python follows to find methods when using inheritance.
+# Since CustomJobCard extends JobCard, both can have validate().
+# super().validate() runs the original JobCard validate() first.
+# If we don’t call super(), important built-in checks may be skipped.
+# So super() is required to keep Frappe working correctly.
